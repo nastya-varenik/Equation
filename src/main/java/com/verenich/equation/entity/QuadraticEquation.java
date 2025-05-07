@@ -24,7 +24,7 @@ public class QuadraticEquation {
     }
 
     public EquationState getState() {
-        double discriminant = b * b - 4 * a * c;
+        double discriminant = getDiscriminant();
         if (discriminant < 0) {
             return EquationState.NO_REAL_ROOTS;
         } else if (discriminant == 0) {

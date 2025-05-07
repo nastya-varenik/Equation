@@ -3,9 +3,9 @@ package com.verenich.equation.facade;
 import com.verenich.equation.creator.EquationCreator;
 import com.verenich.equation.creator.impl.EquationCreatorImpl;
 import com.verenich.equation.entity.QuadraticEquation;
-import com.verenich.equation.io.FileParser;
+import com.verenich.equation.io.EquationFileReader;
 import com.verenich.equation.io.LineParser;
-import com.verenich.equation.pool.Warehouse;
+import com.verenich.equation.warehouse.Warehouse;
 import com.verenich.equation.repository.EquationRepository;
 import com.verenich.equation.service.EquationSolver;
 import com.verenich.equation.service.impl.QuadraticEquationSolverImpl;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class EquationSolverFacade {
     private static final Logger logger = LogManager.getLogger(EquationSolverFacade.class);
 
-    private final FileParser fileParser;
+    private final EquationFileReader equationFileReader;
     private final LineParser lineParser;
     private final EquationCreator equationCreator;
     private final EquationSolver solver;
@@ -26,7 +26,7 @@ public class EquationSolverFacade {
     private final Warehouse warehouse;
 
     public EquationSolverFacade() {
-        this.fileParser = new FileParser();
+        this.equationFileReader = new EquationFileReader();
         this.lineParser = new LineParser();
         this.equationCreator = new EquationCreatorImpl();
         this.solver = new QuadraticEquationSolverImpl();
@@ -35,7 +35,7 @@ public class EquationSolverFacade {
     }
 
     public void processEquations(String filePath) {
-        List<String> lines = fileParser.readLinesFromFile(filePath);
+        List<String> lines = equationFileReader.readLinesFromFile(filePath);
 
         for (String line : lines) {
             Optional<double[]> coefficientsOpt = lineParser.parseLine(line);
